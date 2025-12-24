@@ -1,30 +1,23 @@
-import React, { useContext } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { AuthContext } from '../context/AuthContext';
+import { View, Text, StyleSheet } from "react-native";
 
-const AppBar = ({ title }) => {
-  const { logout } = useContext(AuthContext);
-
+export default function AppBar({ title }) {
   return (
-    <View style={styles.appBar}>
+    <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <Button title="Logout" onPress={logout} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  appBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#6200ea',
+  container: {
+    padding: 15,
+    backgroundColor: "#6200ee",
+    marginBottom: 10,
+    borderRadius: 5,
   },
   title: {
+    color: "white",
     fontSize: 20,
-    color: 'white',
+    fontWeight: "bold",
   },
 });
-
-export default AppBar;

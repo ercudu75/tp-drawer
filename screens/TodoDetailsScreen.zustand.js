@@ -1,13 +1,12 @@
 import { View, Text, Button, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
-import { removeTodo } from "../store/todosSlice";
+import { useTodoStore } from "../store/useTodoStore";
 
 export default function TodoDetailsScreen({ route, navigation }) {
 	const { id, title } = route.params;
-	const dispatch = useDispatch();
+	const removeTodo = useTodoStore((state) => state.removeTodo);
 
 	const handleDelete = () => {
-		dispatch(removeTodo(id));
+		removeTodo(id);
 		navigation.goBack();
 	};
 
