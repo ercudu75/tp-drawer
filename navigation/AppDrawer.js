@@ -1,6 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TodoListScreen from "../screens/TodoListScreen.zustand";
+import TodoListOfflineScreen from "../screens/TodoListOfflineScreen";
 import TodoDetailsScreen from "../screens/TodoDetailsScreen.zustand";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
@@ -14,7 +14,7 @@ function TodoStack() {
 		<Stack.Navigator>
 			<Stack.Screen
 				name="Liste"
-				component={TodoListScreen}
+				component={TodoListOfflineScreen}
 				options={{ headerShown: false }}
 			/>
 			<Stack.Screen
