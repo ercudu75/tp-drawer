@@ -1,35 +1,53 @@
 import * as SQLite from "expo-sqlite";
 
-export const db = SQLite.openDatabaseSync("todos.db");
+export const db = SQLite.openDatabase("todos.db");
 
 export const initDB = () => {
-	db.execSync(`
-    CREATE TABLE IF NOT EXISTS todos (
-      id INTEGER PRIMARY KEY,
-      title TEXT
-    );
-  `);
+	db.transaction(tx => {
+		tx.executeSql(
+			`CREATE TABLE IF NOT EXISTS todos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT
+      );`
+		);
+	});
 };
 
 export const addTodoOffline = (title) => {
-	db.runSync(
-		"INSERT INTO todos (id, title) VALUES (?, ?)",
-		[Date.now(), title]
-	);
+	db.transaction(tx => {
+		tx.executeSql(
+			"INSERT INTO todos (title) VALUES (?)",
+			[title]
+		);
+	});
 };
 
 export const updateTodoOffline = (id, title) => {
-	db.runSync(
-		"UPDATE todos SET title = ? WHERE id = ?",
-		[title, id]
-	);
+	db.transaction(tx => {
+		tx.executeSql(
+			"UPDATE todos SET title = ? WHERE id = ?",
+			[title, id]
+		);
+	});
 };
 
-export const loadTodos = () => {
-	return db.getAllSync("SELECT * FROM todos");
+export const loadTodos = (callback) => {
+	db.transaction(tx => {
+		tx.executeSql(
+			"SELECT * FROM todos",
+			[],
+			(_, result) => {
+				callback(result.rows._array);
+			}
+		);
+	});
 };
 
 export const deleteTodoOffline = (id) => {
-	db.runSync("DELETE FROM todos WHERE id = ?", [id]);
+	db.transaction(tx => {
+		tx.executeSql(
+			"DELETE FROM todos WHERE id = ?",
+			[id]
+		);
+	});
 };
-

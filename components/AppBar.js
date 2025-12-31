@@ -1,23 +1,26 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export default function AppBar({ title }) {
+export default function AppBar({ title, back }) {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 15,
+        backgroundColor: "#2f80ed",
+      }}
+    >
+      {back && (
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={{ color: "#fff", fontSize: 18, marginRight: 10 }}>⬅</Text>
+        </TouchableOpacity>
+      )}
+      <Text style={{ color: "#fff", fontSize: 20, fontWeight: "bold" }}>
+        {title}
+      </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-    backgroundColor: "#6200ee",
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-  title: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-});
